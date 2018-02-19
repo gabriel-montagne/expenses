@@ -1,8 +1,16 @@
 {:dev true
  ;;Twitter used as an example, replace these URIs with the OAuth provider of your choice
- :request-token-uri "https://api.twitter.com/oauth/request_token"
- :access-token-uri "https://api.twitter.com/oauth/access_token"
- :authorize-uri "https://api.twitter.com/oauth/authenticate"
+ :oauth-twitter-consumer-key ""
+ :oauth-twitter-consumer-secret ""
+ :request-twitter-token-uri "https://api.twitter.com/oauth/request_token"
+ :access-twitter-token-uri "https://api.twitter.com/oauth/access_token"
+ :authorize-twitter-uri "https://api.twitter.com/oauth/authenticate"
+ ;; Google
+ :oauth-google-consumer-key ""
+ :oauth-google-consumer-secret ""
+ :request-google-token-uri "https://api.twitter.com/oauth/request_token"
+ :access-google-token-uri "https://api.twitter.com/oauth/access_token"
+ :authorize-google-uri "https://api.twitter.com/oauth/authenticate"
  :port 3000
  ;; when :nrepl-port is set the application starts the nREPL server on load
  :nrepl-port 7000}
