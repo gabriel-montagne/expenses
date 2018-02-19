@@ -47,16 +47,13 @@
 
 (defn -main [& args]
   (cond
-    (some #{"init"} args)
-    (do
-      (mount/start #'expenses.config/env)
-      (migrations/init (select-keys env [:database-url :init-script]))
-      (System/exit 0))
-    (migrations/migration? args)
-    (do
-      (mount/start #'expenses.config/env)
-      (migrations/migrate args (select-keys env [:database-url]))
-      (System/exit 0))
-    :else
-    (start-app args)))
+    (some #{"init"} args) (do
+                            (mount/start #'expenses.config/env)
+                            (migrations/init (select-keys env [:database-url :init-script]))
+                            (System/exit 0))
+    (migrations/migration? args) (do
+                                    (mount/start #'expenses.config/env)
+                                    (migrations/migrate args (select-keys env [:database-url]))
+                                    (System/exit 0))
+    :else (start-app args)))
   

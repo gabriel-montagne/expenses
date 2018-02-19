@@ -2,6 +2,7 @@
   (:require [compojure.core :refer [routes wrap-routes]]
             [expenses.routes.services :refer [service-routes]]
             [expenses.routes.oauth :refer [oauth-routes]]
+            [expenses.routes.api.expenses :refer [expenses-routes]]
             [compojure.route :as route]
             [expenses.env :refer [defaults]]
             [mount.core :as mount]
@@ -15,7 +16,8 @@
   :start
   (middleware/wrap-base
     (routes
-          #'oauth-routes
-          #'service-routes
+      oauth-routes
+      expenses-routes
+      service-routes
       (route/not-found
         "page not found"))))

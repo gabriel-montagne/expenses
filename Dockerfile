@@ -1,8 +1,7 @@
-FROM java:8-alpine
-MAINTAINER Your Name <you@example.com>
+FROM clojure
+MAINTAINER Gabriel Munteanu <gabimunteanu.sdt@gmail.com>
 
-ADD target/uberjar/expenses.jar /expenses/app.jar
-
-EXPOSE 3000
-
-CMD ["java", "-jar", "/expenses/app.jar"]
+RUN mkdir -p /code
+WORKDIR /code
+ADD . /code
+RUN lein deps

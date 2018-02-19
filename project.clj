@@ -9,6 +9,7 @@
                  [compojure "1.6.0"]
                  [conman "0.7.5"]
                  [cprop "0.1.11"]
+                 [de.kolov/ak-dbg "0.2.3"]
                  [funcool/struct "1.2.0"]
                  [luminus-immutant "0.2.4"]
                  [luminus-migrations "0.5.0"]
@@ -39,7 +40,8 @@
   :resource-paths ["resources"]
   :target-path "target/%s/"
   :main ^:skip-aot expenses.core
-  :migratus {:store :database :db ~(get (System/getenv) "DATABASE_URL")}
+  :migratus {:store :database
+             :db ~(get (System/getenv) "DATABASE_URL")}
 
   :plugins [[migratus-lein "0.5.4"]
             [lein-immutant "2.1.0"]]
