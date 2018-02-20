@@ -2,7 +2,7 @@
   (:require [compojure.core :refer [routes wrap-routes]]
             [expenses.routes.services :refer [service-routes]]
             [expenses.routes.oauth :refer [oauth-routes]]
-            [expenses.routes.api.expenses :refer [expenses-routes]]
+            [expenses.routes.expenses :refer [expenses-routes]]
             [compojure.route :as route]
             [expenses.env :refer [defaults]]
             [mount.core :as mount]
@@ -18,6 +18,6 @@
     (routes
       oauth-routes
       expenses-routes
-      service-routes
+      ;;service-routes
       (route/not-found
         "page not found"))))
