@@ -8,7 +8,7 @@
 
 (hugsql/def-db-fns "expenses/sql/expenses.sql")
 
-(def url
+(defstate url
   (:database-url env))
 
 (defn get-all-expenses []

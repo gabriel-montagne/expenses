@@ -74,8 +74,8 @@ fabric.properties
 /classes
 /checkouts
 pom.xml
-dev-config.edn
-test-config.edn
+#dev-config.edn
+#test-config.edn
 *.jar
 *.class
 /.lein-*
