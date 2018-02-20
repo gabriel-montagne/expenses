@@ -8,28 +8,25 @@
 
 (hugsql/def-db-fns "expenses/sql/expenses.sql")
 
-(defstate url
-  (:database-url env))
-
 (defn get-all-expenses []
-  {:expenses (expenses-read url)})
+  {:expenses (expenses-read (:database-url env))})
 
 (defn get-expenses-by-userid [userid]
   {:expenses (by-userid-expenses-read
-               url
+               (:database-url env)
                {:userid userid})})
 
 (defn get-expense-by-id [userid id]
   {:expense (first
               (by-userid-expenses-read
-                      url
+                (:database-url env)
                       {:userid userid
                        :id id}))})
 
 (defn post-expense [userid expense]
   (try
     {:expense (expense-insert!
-                url
+                (:database-url env)
                 {:userid userid
                  :date (:date expense)
                  :description (:description expense)
@@ -41,7 +38,7 @@
 (defn patch-expense [userid id expense]
   (try
     {:expense (expense-update!
-                url
+                (:database-url env)
                 (merge
                   (:expense (get-expense-by-id userid id))
                   expense))}
@@ -51,7 +48,7 @@
 (defn delete-expense [userid id]
   (try
     {:expense (expense-remove!
-                url
+                (:database-url env)
                 {:userid userid
                  :id id})}
     (catch PSQLException e

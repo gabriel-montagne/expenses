@@ -10,12 +10,12 @@
 
     [expenses.models.expenses :as md-expenses]))
 
-(s/defschema Expense {:id s/Str,
+(s/defschema Expense {:id s/Int,
                       :userid s/Str
                       :date s/Str
                       :description s/Str
                       :amount s/Num
-                      :comment s/Num})
+                      :comment s/Str})
 
 (defn access-error [_ _]
   (unauthorized {:error "unauthorized"}))

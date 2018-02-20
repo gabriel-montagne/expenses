@@ -1,21 +1,52 @@
-# expenses rest API
+# Clojure REST API example
 
-generated using Luminus version "2.9.12.25"
+## Prerequisite
 
-FIXME
+ - [Docker](https://docs.docker.com/install/#server)
+ - [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Prerequisites
+## Instalation
 
-You will need [Leiningen][1] 2.0 or above installed.
+Clone the repository on your computer
 
-[1]: https://github.com/technomancy/leiningen
+    https://github.com/gabriel-montagne/expenses.git (or ssh)
+
+Navigate to the new directory
+
+    $> cd expenses
+    
+Run docker-compose
+    
+    $> docker-compose up
+    
+NOTE:
+If you want to rebuild the image run
+
+    $> docker-compose up --build
 
 ## Running
 
-To start a web server for the application, run:
+After the containers are up and running open your browser and navigate to
+ - [localhost:3000/swagger_ui](http://localhost:3000/swagger_ui)
 
-    lein run 
+NOTE:
 
-## License
+ There is one user added during migrations: 
+ 
+ ```
+    id = '1'
+    name = 'admin'
+ ```
+ you can use his id to test.
 
-Copyright © 2018 FIXME
+## Users management
+
+TBD
+
+## Token auth
+
+TBD 
+
+## OAuth
+
+TBD
