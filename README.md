@@ -5,7 +5,7 @@
  - [Docker](https://docs.docker.com/install/#server)
  - [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Instalation
+## Run (Instalation)
 
 Clone the repository on your computer
 
@@ -38,7 +38,15 @@ NOTE:
     name = 'admin'
  ```
  you can use his id to test.
+ 
+## Tests
 
+- Run containers.
+- Run commands:
+    
+    $>docker exec -it expenses_web_1 /bin/bash (open terminal in container)
+    root@containerID:/code# lein test
+    
 ## Users management
 
 TBD
