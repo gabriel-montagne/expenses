@@ -10,7 +10,7 @@
 
     [expenses.models.expenses :as md-expenses]))
 
-(s/defschema Expense {:id s/Int,
+(s/defschema Expense {
                       :userid s/Str
                       :date s/Str
                       :description s/Str
@@ -56,13 +56,13 @@
       :path-params [userid :- String]
       :body-params [expense :- Expense]
       :summary "insert an expense"
-      (ok (md-expenses/post-expense userid expense)))
-    (PATCH "/:userid/:id" []
+      (accepted (md-expenses/post-expense userid expense)))
+    (PUT "/:userid/:id" []
       :path-params [userid :- String, id :- Long]
       :body-params [expense :- Expense]
       :summary "update an expense"
-      (ok (md-expenses/patch-expense userid id expense)))
+      (accepted (md-expenses/patch-expense userid id expense)))
     (DELETE "/:userid/:id" []
       :path-params [userid :- String, id :- Long]
       :summary "delete an expense"
-      (ok (md-expenses/delete-expense userid id)))))
+      (accepted (md-expenses/delete-expense userid id)))))

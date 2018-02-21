@@ -2,7 +2,8 @@
   (:require [clojure.test :refer :all]
             [ring.mock.request :refer :all]
             [expenses.handler :refer :all]
-            [mount.core :as mount]))
+            [mount.core :as mount]
+            [clojure.data.json :as json]))
 
 (use-fixtures
   :once
@@ -13,7 +14,7 @@
 
 (deftest test-app
   (testing "main route"
-    (let [response (app (request :get "/"))]
+    (let [response (app (request :get "/api/expenses"))]
       (is (= 200 (:status response)))))
 
   (testing "not-found route"

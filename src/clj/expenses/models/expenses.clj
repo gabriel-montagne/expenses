@@ -3,7 +3,8 @@
     [ak-dbg.core :refer :all]
     [clojure.tools.logging :as log]
     [expenses.config :refer [env]]
-    [hugsql.core :as hugsql])
+    [hugsql.core :as hugsql]
+    [conman.core :as conman])
   (:import (org.postgresql.util PSQLException)))
 
 (hugsql/def-db-fns "expenses/sql/expenses.sql")
