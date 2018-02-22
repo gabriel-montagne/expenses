@@ -24,23 +24,27 @@
 (defonce test-expense
          {:expense
           {
-           :userid      "1"
-           :date        "2018-02-20 12:00"
+           :date        "2018-02-22T11:32:00.000-00:00"
            :amount      10
            :description "some description"
            :comment     "test"
            }
           })
 
-(defonce patch-expense
+(defonce put-expense
          {:expense
           {
-           :userid      "1"
-           :date        "2018-02-20 12:00"
+           :date        "2018-02-22T11:32:00.000-00:00"
            :amount      20
            :description "some description updated"
            :comment     "test"
            }
+          })
+
+(defonce patch-expense
+         {
+          :date        "2018-02-22T11:32:00.000-00:00"
+          :amount      30
           })
 
 (deftest test-expenses
@@ -65,6 +69,12 @@
     (let [response (app (base/test-put-request (str "/api/expenses/"
                                                       (get-in (deref response-expense) [:expense :userid])
                                                       "/"
+                                                      (get-in (deref response-expense) [:expense :id])) put-expense))]
+      (is (= 202 (:status response)))))
+  (testing "patch expense"
+    (let [response (app (base/test-patch-request (str "/api/expenses/"
+                                                      (get-in (deref response-expense) [:expense :userid])
+                                                      "/"
                                                       (get-in (deref response-expense) [:expense :id])) patch-expense))]
       (is (= 202 (:status response)))))
   (testing "delete expense"
@@ -72,5 +82,6 @@
                                               (get-in (deref response-expense) [:expense :userid])
                                               "/"
                                               (get-in (deref response-expense) [:expense :id]))))]
-      (is (= 202 (:status response))))))
+      (is (= 202 (:status response)))))
+  )
 
