@@ -11,12 +11,12 @@ WHERE userid = :userid AND id = :id;
 
 -- :name expense-insert! :<! :1
 INSERT INTO expenses(userid, date, description, amount, comment)
-VALUES (:userid, to_date(:date, 'YYYY-MM-DD HH24:MI'), :description, :amount, :comment)
+VALUES (:userid, to_timestamp(:date, 'YYYY-MM-DD HH24:MI'), :description, :amount, :comment)
 RETURNING *;
 
 -- :name expense-update! :<! :1
 UPDATE expenses SET
-  userid = :userid, date = to_date(:date, 'YYYY-MM-DD HH24:MI'), description = :description, amount = :amount, comment = :comment
+  userid = :userid, date = to_timestamp(:date, 'YYYY-MM-DD HH24:MI'), description = :description, amount = :amount, comment = :comment
 WHERE id = :id AND userid = :userid
 RETURNING *;
 

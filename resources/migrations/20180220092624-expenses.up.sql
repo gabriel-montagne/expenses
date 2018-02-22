@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS expenses (
   id SERIAL PRIMARY KEY,
   userid VARCHAR (200) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  date DATE default CURRENT_DATE,
+  date TIMESTAMP default CURRENT_DATE,
   description VARCHAR(500),
   amount NUMERIC CHECK (amount >= 0),
   comment VARCHAR(500),

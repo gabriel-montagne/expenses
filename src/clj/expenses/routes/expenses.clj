@@ -12,10 +12,12 @@
 
 (s/defschema Expense {
                       :userid s/Str
-                      :date s/Str
+                      :date s/Inst
                       :description s/Str
                       :amount s/Num
                       :comment s/Str})
+
+(s/defschema Patch-expense {})
 
 (defn access-error [_ _]
   (unauthorized {:error "unauthorized"}))
@@ -57,6 +59,11 @@
       :body-params [expense :- Expense]
       :summary "insert an expense"
       (accepted (md-expenses/post-expense userid expense)))
+    (PATCH "/:userid/:id" []
+      :path-params [userid :- String, id :- Long]
+      :body-params [expense :- Patch-expense]
+      :summary "patch an expense"
+      (accepted (md-expenses/patch-expense userid id expense)))
     (PUT "/:userid/:id" []
       :path-params [userid :- String, id :- Long]
       :body-params [expense :- Expense]

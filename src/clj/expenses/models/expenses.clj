@@ -24,12 +24,15 @@
                       {:userid userid
                        :id id}))})
 
+(defn format-javadate [date]
+  (.format (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm") date))
+
 (defn post-expense [userid expense]
   (try
     {:expense (expense-insert!
                 (:database-url env)
                 {:userid userid
-                 :date (:date expense)
+                 :date (format-javadate (:date expense))
                  :description (:description expense)
                  :amount (:amount expense)
                  :comment (:comment expense)})}
@@ -42,7 +45,7 @@
                 (:database-url env)
                 (merge
                   (:expense (get-expense-by-id userid id))
-                  expense))}
+                  (update-in expense [:date] (format-javadate (:date expense)))))}
     (catch PSQLException e
       {:message (.getMessage e)})))
 
