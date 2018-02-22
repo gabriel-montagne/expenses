@@ -11,13 +11,16 @@
     [expenses.models.expenses :as md-expenses]))
 
 (s/defschema Expense {
-                      :userid s/Str
                       :date s/Inst
                       :description s/Str
                       :amount s/Num
                       :comment s/Str})
 
-(s/defschema Patch-expense {})
+(s/defschema Patch-expense {
+                            (s/optional-key :date) (describe s/Inst "date")
+                            (s/optional-key :description) (describe String "description")
+                            (s/optional-key :comments) (describe String "comments")
+                            (s/optional-key :amount) (describe Integer "integer")})
 
 (defn access-error [_ _]
   (unauthorized {:error "unauthorized"}))
@@ -41,6 +44,8 @@
                            :title "Expenses API"
                            :description "Expenses Services"}}}}
 
+
+
   (context "/api/expenses" []
     :tags ["expenses api"]
     (GET "/" []
@@ -61,14 +66,22 @@
       (accepted (md-expenses/post-expense userid expense)))
     (PATCH "/:userid/:id" []
       :path-params [userid :- String, id :- Long]
-      :body-params [expense :- Patch-expense]
+      :body [{:keys [date amount description comment] :or {}}
+             (s/maybe {
+                       (s/optional-key :date) (describe s/Inst "date")
+                       (s/optional-key :amount) (describe s/Num "date")
+                       (s/optional-key :description) (describe s/Str "date")
+                       (s/optional-key :comment) (describe s/Str "date")})]
       :summary "patch an expense"
-      (accepted (md-expenses/patch-expense userid id expense)))
+      (accepted (md-expenses/patch-expense userid id {:date date
+                                                      :amount amount
+                                                      :description description
+                                                      :comment comment})))
     (PUT "/:userid/:id" []
       :path-params [userid :- String, id :- Long]
       :body-params [expense :- Expense]
       :summary "update an expense"
-      (accepted (md-expenses/patch-expense userid id expense)))
+      (accepted (md-expenses/put-expense userid id expense)))
     (DELETE "/:userid/:id" []
       :path-params [userid :- String, id :- Long]
       :summary "delete an expense"

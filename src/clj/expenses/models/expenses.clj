@@ -24,18 +24,30 @@
                       {:userid userid
                        :id id}))})
 
-(defn format-javadate [date]
-  (.format (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm") date))
+(defn format-javadate-as-text [expense]
+  (if (contains? expense :date)
+    (assoc-in expense [:date]
+              (.format
+                (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm")
+                (get-in expense [:date])))
+    expense))
+
+(defn remove-nils [expense]
+  (into {} (remove (fn [[k v]] (nil? v)) expense)))
 
 (defn post-expense [userid expense]
   (try
     {:expense (expense-insert!
                 (:database-url env)
-                {:userid userid
-                 :date (format-javadate (:date expense))
-                 :description (:description expense)
-                 :amount (:amount expense)
-                 :comment (:comment expense)})}
+                (assoc (format-javadate-as-text expense) :userid userid))}
+    (catch PSQLException e
+      {:message (.getMessage e)})))
+
+(defn put-expense [userid id expense]
+  (try
+    {:expense (expense-update!
+                (:database-url env)
+                (assoc expense :id id :userid userid))}
     (catch PSQLException e
       {:message (.getMessage e)})))
 
@@ -45,7 +57,8 @@
                 (:database-url env)
                 (merge
                   (:expense (get-expense-by-id userid id))
-                  (update-in expense [:date] (format-javadate (:date expense)))))}
+                  (remove-nils (:expense (format-javadate-as-text expense)))
+                  ))}
     (catch PSQLException e
       {:message (.getMessage e)})))
 
